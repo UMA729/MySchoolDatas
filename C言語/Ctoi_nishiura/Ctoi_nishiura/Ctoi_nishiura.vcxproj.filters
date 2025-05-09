@@ -27,5 +27,8 @@
     <ClCompile Include="C_toi4.c">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="one_stroke.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
