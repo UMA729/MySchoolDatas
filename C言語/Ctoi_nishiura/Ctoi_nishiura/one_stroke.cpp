@@ -55,9 +55,9 @@ int main()
 
 				if (z_count == 0)
 				{
-				//0のカウントが0ならばクリア
-				printf("game clear");
-				return 0;
+					//0のカウントが0ならばクリア
+					printf("game clear");
+					return 0;
 				}
 				else if (z_count > 0)
 				{
@@ -89,26 +89,26 @@ int main()
 			{
 				if (map[i][j] == 2)
 				{
-					if (act_num == 2 && map[i + 1][j] != 1 && map[i + 1][j] != 3)
+					if (act_num == 2 && map[i + 1][j] == 0)
 					{
 						map[i + 1][j] = 2;
 						map[i][j] = 3;
 						i += 1;
 						break;
 					}
-					else if (act_num == 4 && map[i][j - 1] != 1 && map[i][j - 1] != 3)
+					else if (act_num == 4 && map[i][j - 1] == 0)
 					{
 						map[i][j - 1] = 2;
 						map[i][j] = 3;
 						break;
 					}
-					else if (act_num == 6 && map[i][j + 1] != 1 && map[i][j + 1] != 3)
+					else if (act_num == 6 && map[i][j + 1] == 0)
 					{
 						map[i][j + 1] = 2;
 						map[i][j] = 3;
 						break;
 					}
-					else if (act_num == 8 && map[i - 1][j] != 1 && map[i - 1][j] != 3)
+					else if (act_num == 8 && map[i - 1][j] == 0)
 					{
 						map[i - 1][j] = 2;
 						map[i][j] = 3;
