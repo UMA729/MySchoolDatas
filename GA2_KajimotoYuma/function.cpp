@@ -4,6 +4,8 @@
 
 //座標 + ベクトル
 Point Add_Point_Vector(Point p0, Vector v0) {Point r;	r.x = p0.x + v0.x;	r.y = p0.y + v0.y;	return r; }
+//座標 + ベクトル
+Point Sub_Point_Vector(Point p0, Vector v0) {Point r;	r.x = p0.x - v0.x;	r.y = p0.y - v0.y;	return r; }
 //座標 - 座標
 Vector Sub_Point_Point(Point p0, Point p1) { Vector r;	r.x = p0.x - p1.x;	r.y = p0.y - p1.y;	return r; }
 //ベクトル - ベクトル
