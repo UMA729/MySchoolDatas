@@ -8,45 +8,28 @@ CEnemy::CEnemy(int x, int y)
 	radius = 32;
 	pos.x = x;
 	pos.y = y;
-	vec.x = DEF_X;
-	vec.y = DEF_Y;
+	vec.y = 20;
 	ID = ENEMY;
 }
 
 int CEnemy::Action(list<unique_ptr<Base>>& base)
 {
-	pos.x += vec.x;
-	pos.y += vec.y;
+
+	if (GCOMBO < 30)
+	{
+		Gravity = 0.49f;
+	}
+	pos.y -= vec.y;
+
+	vec.y -= Gravity;
+
+
 	//‰æ–Ê‚Ì‰¡‚Å’µ‚Ë•Ô‚é
-	if (pos.x<radius || pos.x>WINDOW_WIDTH - radius)
+	if (pos.y < radius / 2 || pos.y > WINDOW_HEIGHT - radius / 2)
 	{
-		vec.x = -vec.x;
-	}
-	//‰æ–Ê‚Ì‰º‚Å’µ‚Ë•Ô‚é
-	if (pos.y > WINDOW_HEIGHT - radius ||pos.y < radius)
-	{
-		vec.y = -vec.y;
+		FLAG = false;
 	}
 
-	for (auto i = base.begin(); i != base.end(); i++)
-	{
-		if ((*i)->ID == PLAYER)
-		{
-
-			int Pobj_frame = ((CCircle*)(*i).get())->clear_to_frame;
-			int P_radius = ((CCircle*)(*i).get())->radius;
-			//‰Šú’l‚É
-			if (Pobj_frame == 60)
-			{
-				now_vecX = vec.x / abs(vec.x);
-				now_vecY = vec.x / abs(vec.y);
-
-				//Œ»İ‚ÌˆÚ“®•ûŒü
-				vec.x = now_vecX * DEF_X;
-				vec.y = now_vecY * DEF_Y;
-			}
-		}
-	}
 	return 0;
 }
 

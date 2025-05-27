@@ -3,8 +3,6 @@
 #include "objBase.h"
 #include "main.h"
 
-#define DEF_X 4
-#define DEF_Y 3
 class CEnemy :public Base
 {
 public:
@@ -12,10 +10,8 @@ public:
 
 	//”¼Œa
 	int radius;
-	//Œ»İ‚ÌˆÚ“®•ûŒü
-	int now_vecX;
-	int now_vecY;
 
+	Vector max_vec{ 0.0 };
 
 	int Action(list<unique_ptr<Base>>&);
 	void Draw();

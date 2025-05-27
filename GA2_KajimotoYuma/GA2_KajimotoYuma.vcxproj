@@ -155,7 +155,7 @@
     <ClInclude Include="circle.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="enemy2.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="function.h" />
     <ClInclude Include="game.h" />
@@ -170,7 +170,7 @@
     <ClCompile Include="circle.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="enemy2.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="function.cpp" />
     <ClCompile Include="game.cpp" />

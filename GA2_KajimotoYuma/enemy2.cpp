@@ -7,11 +7,26 @@ CEnemy2::CEnemy2(int x, int y)
 	radius = 32;
 	pos.x = x;
 	pos.y = y;
+	vec.y = 20;
 	ID = ENEMY;
 }
 
 int CEnemy2::Action(list<unique_ptr<Base>>& base)
 {
+	if (GCOMBO < 30)
+	{
+		Gravity = 0.49f;
+	}
+	
+	pos.y += vec.y;
+	vec.y -= Gravity;
+
+	//画面の横で跳ね返る
+	if (pos.x<radius / 2 || pos.x>WINDOW_WIDTH - radius / 2)
+	{
+		FLAG = false;
+	}
+
 	return 0;
 }
 
@@ -21,7 +36,7 @@ void CEnemy2::Draw() {
 	DrawCircle(
 		pos.x, pos.y,			 //中心座標
 		radius,					 //半径
-		GetColor(255, 0, 0), //色
+		GetColor(120, 120, 0), //色
 		false					 //塗りつぶし(true/false)
 	);
 }

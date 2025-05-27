@@ -13,6 +13,7 @@ public:
 
 	Point pos{ 0,0 };//位置
 	Vector vec{ 0,0 };//移動ベクトル
+	Vector max_vec{ 0,0 };//ベクトル最大値
 
 	int CutX{ 0 };//画像切り取り位置x
 	int CutY{ 0 };//画像切り取り位置y
@@ -21,6 +22,8 @@ public:
 	int ImgHeight{ 0 };//画像の縦サイズ
 
 	int Dir{ 0 };//オブジェクトの向き
+
+	float Gravity{ 0.98f };
 
 	~Character() { DeleteGraph(img); }
 };

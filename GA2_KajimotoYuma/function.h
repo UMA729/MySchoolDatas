@@ -41,6 +41,8 @@ struct MINMAX {
 };
 //座標 + ベクトル
 Point Add_Point_Vector(Point, Vector);
+//座標ーベクトル
+Point Sub_Point_Vector(Point, Vector);
 //座標 - 座標
 Vector Sub_Point_Point(Point, Point);
 //ベクトル - ベクトル

@@ -26,6 +26,7 @@ extern float GSCORE_POW;
 enum objID {
 	PLAYER,
 	ENEMY,
+	POS,
 };
 
 //2D—p

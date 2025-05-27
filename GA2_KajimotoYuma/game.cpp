@@ -14,18 +14,31 @@ int g_time;
 float GSCORE{ 1.0f };
 float GSCORE_POW{ 1.0f };
 bool g_click_now = false;
+bool alr_c = false;
 
 //コンストラクタ
 CGame::CGame(CManager* p) :CScene(p){
-
-	Point pos{ Range_Random_NumberF(32,WINDOW_WIDTH - 32),400.0f };
-	base.emplace_back((unique_ptr<Base>)new CEnemy(pos.x, pos.y));
 
 }
 
 //更新処理
 int CGame::Update(){
 
+	if (GGAMETIME % 3 == 0 && GCOMBO < 30 )
+	{
+		if (alr_c == false)
+		{
+			alr_c = true;
+			Point pos1{ Range_Random_NumberF(32, WINDOW_WIDTH / 2 -32),WINDOW_HEIGHT-32 };
+			base.emplace_back((unique_ptr<Base>)new CEnemy(pos1.x, pos1.y));
+			Point pos2{ Range_Random_NumberF(WINDOW_WIDTH - 32,WINDOW_WIDTH  + 32),WINDOW_HEIGHT - 32 };
+			base.emplace_back((unique_ptr<Base>)new CEnemy2(pos2.x, pos2.y));
+		}
+	}
+	else
+	{
+		alr_c = false;
+	}
 	g_time++;
 	if (g_time == 60)
 	{
@@ -71,7 +84,9 @@ void CGame::Draw()
 	DrawFormatString(0, 16, GetColor(255, 255, 255), "Score = %.3f", GSCORE);
 	DrawFormatString(0, 32, GetColor(255, 255, 255), "COMBO = %d", GCOMBO);
 	DrawFormatString(400, 0, GetColor(255, 255, 255), "Time = %d", GGAMETIME);
-	
+
+	DrawCircle(400, WINDOW_HEIGHT - 32, 32, GetColor(255, 255, 255), false);
+
 	//listオブジェクトの描画
 	for (auto i = base.begin(); i != base.end(); i++)
 		if ((*i)->FLAG) (*i)->Draw();
