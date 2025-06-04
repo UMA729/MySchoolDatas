@@ -6,7 +6,7 @@
 class CEnemy2 :public Base
 {
 public:
-	CEnemy2(int x, int y);
+	CEnemy2();
 
 	//”¼Œa
 	int radius;

@@ -59,6 +59,12 @@
     <ClInclude Include="enemy2.h">
       <Filter>ヘッダー ファイル\オブジェクト</Filter>
     </ClInclude>
+    <ClInclude Include="spring_circle.h">
+      <Filter>ヘッダー ファイル\オブジェクト</Filter>
+    </ClInclude>
+    <ClInclude Include="spring_circle2.h">
+      <Filter>ヘッダー ファイル\オブジェクト</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -80,6 +86,12 @@
       <Filter>ソース ファイル\オブジェクト</Filter>
     </ClCompile>
     <ClCompile Include="enemy2.cpp">
+      <Filter>ソース ファイル\オブジェクト</Filter>
+    </ClCompile>
+    <ClCompile Include="spring_circle.cpp">
+      <Filter>ソース ファイル\オブジェクト</Filter>
+    </ClCompile>
+    <ClCompile Include="spring_circle2.cpp">
       <Filter>ソース ファイル\オブジェクト</Filter>
     </ClCompile>
   </ItemGroup>

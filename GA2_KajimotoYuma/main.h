@@ -18,9 +18,7 @@ constexpr auto WINDOW_WIDTH = 800;	//‰¡•
 constexpr auto WINDOW_HEIGHT = 600;	//c•
 
 //ƒOƒ[ƒoƒ‹•Ï”
-extern int GCOMBO;
-extern float GSCORE;
-extern float GSCORE_POW;
+extern int GSCORE;
 
 //¯•ÊID
 enum objID {

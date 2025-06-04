@@ -23,8 +23,6 @@ public:
 
 	int Dir{ 0 };//オブジェクトの向き
 
-	float Gravity{ 0.98f };
-
 	~Character() { DeleteGraph(img); }
 };
 

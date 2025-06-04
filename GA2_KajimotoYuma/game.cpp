@@ -7,62 +7,31 @@
 #include "enemy.h"
 #include "enemy2.h"
 #include "circle.h"
+#include "spring_circle2.h"
 
-int GCOMBO{ 0 };
-int GGAMETIME{ 0 };
-int g_time;
-float GSCORE{ 1.0f };
-float GSCORE_POW{ 1.0f };
-bool g_click_now = false;
-bool alr_c = false;
+int GSCORE{ 0 };
 
 //コンストラクタ
 CGame::CGame(CManager* p) :CScene(p){
+	//Point pos{ Range_Random_NumberF(32, WINDOW_WIDTH - 32),400};
+	//base.emplace_back((unique_ptr<Base>)new CEnemy(pos.x, pos.y));
 
+	base.emplace_back((unique_ptr<Base>)new CSpring_Circle2());
 }
 
 //更新処理
 int CGame::Update(){
 
-	if (GGAMETIME % 3 == 0 && GCOMBO < 30 )
-	{
-		if (alr_c == false)
-		{
-			alr_c = true;
-			Point pos1{ Range_Random_NumberF(32, WINDOW_WIDTH / 2 -32),WINDOW_HEIGHT-32 };
-			base.emplace_back((unique_ptr<Base>)new CEnemy(pos1.x, pos1.y));
-			Point pos2{ Range_Random_NumberF(WINDOW_WIDTH - 32,WINDOW_WIDTH  + 32),WINDOW_HEIGHT - 32 };
-			base.emplace_back((unique_ptr<Base>)new CEnemy2(pos2.x, pos2.y));
-		}
-	}
-	else
-	{
-		alr_c = false;
-	}
-	g_time++;
-	if (g_time == 60)
-	{
-		GGAMETIME++;
-		g_time = 0;
-	}
 	//クリックした場合
-	{
-		if ((GetMouseInput() & MOUSE_INPUT_LEFT))
-		{
-			if (g_click_now == false)
-			{
-				g_click_now = true;
-				int x, y;
-				GetMousePoint(&x, &y);//x,yにクリックした位置が保存される
+	//{
+	//	if (GetMouseInput() & MOUSE_INPUT_LEFT)
+	//	{
+	//		int x, y;
+	//		GetMousePoint(&x, &y);//x,yにクリックした位置が保存される
 
-				base.emplace_back((unique_ptr<Base>)new CCircle(x, y));
-			}
-		}
-		else
-		{
-			g_click_now = false;
-		}
-	}
+	//		base.emplace_back((unique_ptr<Base>)new CCircle(x, y));
+	//	}
+	//}
 	//listオブジェクトの更新処理
 	for (auto i = base.begin(); i != base.end(); i++)
 		(*i)->Action(base);
@@ -81,11 +50,7 @@ int CGame::Update(){
 void CGame::Draw()
 {
 	DrawFormatString(0, 0, GetColor(255, 255, 255), "List_Size = %d", base.size());
-	DrawFormatString(0, 16, GetColor(255, 255, 255), "Score = %.3f", GSCORE);
-	DrawFormatString(0, 32, GetColor(255, 255, 255), "COMBO = %d", GCOMBO);
-	DrawFormatString(400, 0, GetColor(255, 255, 255), "Time = %d", GGAMETIME);
-
-	DrawCircle(400, WINDOW_HEIGHT - 32, 32, GetColor(255, 255, 255), false);
+	DrawFormatString(0, 16, GetColor(255, 255, 255), "Score = %d", GSCORE);
 
 	//listオブジェクトの描画
 	for (auto i = base.begin(); i != base.end(); i++)

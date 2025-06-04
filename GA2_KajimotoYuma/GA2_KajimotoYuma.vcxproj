@@ -164,6 +164,8 @@
     <ClInclude Include="objChar.h" />
     <ClInclude Include="Scene_Base.h" />
     <ClInclude Include="Scene_Manager.h" />
+    <ClInclude Include="spring_circle.h" />
+    <ClInclude Include="spring_circle2.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CCamera.cpp" />
@@ -175,6 +177,8 @@
     <ClCompile Include="function.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="spring_circle.cpp" />
+    <ClCompile Include="spring_circle2.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,31 +2,19 @@
 #include "enemy2.h"
 #include "function.h"
 
-CEnemy2::CEnemy2(int x, int y)
+CEnemy2::CEnemy2()
 {
 	radius = 32;
-	pos.x = x;
-	pos.y = y;
-	vec.y = 20;
+	pos.x = 32;
+	pos.y = WINDOW_HEIGHT / 2 - 64;
+	vec.x = 5;
+
+
 	ID = ENEMY;
 }
 
 int CEnemy2::Action(list<unique_ptr<Base>>& base)
 {
-	if (GCOMBO < 30)
-	{
-		Gravity = 0.49f;
-	}
-	
-	pos.y += vec.y;
-	vec.y -= Gravity;
-
-	//‰æ–Ê‚Ì‰¡‚Å’µ‚Ë•Ô‚é
-	if (pos.x<radius / 2 || pos.x>WINDOW_WIDTH - radius / 2)
-	{
-		FLAG = false;
-	}
-
 	return 0;
 }
 
