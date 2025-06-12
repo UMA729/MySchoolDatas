@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\インプット">
+      <UniqueIdentifier>{4110f12b-66d5-457b-97ed-c535b22f87b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\オーディオ">
+      <UniqueIdentifier>{803ce965-d81d-48f0-a446-186c1281fc30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\グラフィックパイプライン">
+      <UniqueIdentifier>{5b1c932f-74a6-4839-8f25-c8b3e802ad13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\DrectX12">
+      <UniqueIdentifier>{f6658781-f49f-45c1-a6b9-ead6aef8a392}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\DrectX12\DirectX12CPP">
+      <UniqueIdentifier>{4512d8ba-72ab-4d06-8bdd-5906157b9f60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\バッファ">
+      <UniqueIdentifier>{f9806a54-1882-4f4f-9511-a27929d3e92c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\バッファ\バッファcpp">
+      <UniqueIdentifier>{5de829d4-7675-4140-b823-53d0e61d7665}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\グラフィックパイプライン\DrawPipeLineCPP">
+      <UniqueIdentifier>{d62a8b24-e476-4c7c-914c-8edf6733aa5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\出力スレッド">
+      <UniqueIdentifier>{80a3b9f3-3d51-4382-afaa-cc4e906c7e8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\レンダリングアクション">
+      <UniqueIdentifier>{39d14fb8-60c7-4fa7-b6ce-ce2953371686}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\レンダリングアクション\レンダリングアクションCPP">
+      <UniqueIdentifier>{386c1c0e-2c66-4b86-a67b-87276dfca7b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\グラフィックパイプライン\Cube3DPipeLineCPP">
+      <UniqueIdentifier>{82ba72f8-479f-4bf7-b54d-f3b08d97abdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\モデル構造">
+      <UniqueIdentifier>{d74afce4-38fb-47f2-bae2-0ff9b7be99df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\バッファ\イメージロード">
+      <UniqueIdentifier>{24a07938-dd3c-4cb1-bd40-9ffcfc26108e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="InputAudio\Input.cpp">
+      <Filter>ソース ファイル\インプット</Filter>
+    </ClCompile>
+    <ClCompile Include="InputAudio\Audio.cpp">
+      <Filter>ソース ファイル\オーディオ</Filter>
+    </ClCompile>
+    <ClCompile Include="DrectX12\Command.cpp">
+      <Filter>ソース ファイル\DrectX12\DirectX12CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="DrectX12\InitDx12.cpp">
+      <Filter>ソース ファイル\DrectX12\DirectX12CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="DrectX12\RenderBuffer.cpp">
+      <Filter>ソース ファイル\DrectX12\DirectX12CPP</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderGraphicPipeline\DrawPipeLine.cpp">
+      <Filter>ソース ファイル\グラフィックパイプライン\DrawPipeLineCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderGraphicPipeline\Cube3DPipeLine.cpp">
+      <Filter>ソース ファイル\グラフィックパイプライン\Cube3DPipeLineCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="BufferAndImg\LoadImg.cpp">
+      <Filter>ソース ファイル\バッファ\イメージロード</Filter>
+    </ClCompile>
+    <ClCompile Include="BufferAndImg\RenderTextureBuffer.cpp">
+      <Filter>ソース ファイル\バッファ\バッファcpp</Filter>
+    </ClCompile>
+    <ClCompile Include="BufferAndImg\StructBuffer.cpp">
+      <Filter>ソース ファイル\バッファ\バッファcpp</Filter>
+    </ClCompile>
+    <ClCompile Include="BufferAndImg\ZBuffer.cpp">
+      <Filter>ソース ファイル\バッファ\バッファcpp</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderingAction\RenAct3dDraw.cpp">
+      <Filter>ソース ファイル\レンダリングアクション\レンダリングアクションCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderingAction\RenActOutput.cpp">
+      <Filter>ソース ファイル\レンダリングアクション\レンダリングアクションCPP</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreadOutput\ThreadOutput.cpp">
+      <Filter>ソース ファイル\出力スレッド</Filter>
+    </ClCompile>
+    <ClCompile Include="BufferAndImg\LoadFlont.cpp">
+      <Filter>ソース ファイル\バッファ\イメージロード</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="InputAudio\Input.h">
+      <Filter>ソース ファイル\インプット</Filter>
+    </ClInclude>
+    <ClInclude Include="InputAudio\Audio.h">
+      <Filter>ソース ファイル\オーディオ</Filter>
+    </ClInclude>
+    <ClInclude Include="DrectX12\DX12Library.h">
+      <Filter>ソース ファイル\DrectX12</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderGraphicPipeline\GraphicPipeLine.h">
+      <Filter>ソース ファイル\グラフィックパイプライン</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferAndImg\Buffer.h">
+      <Filter>ソース ファイル\バッファ</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelStructs\3DcubeModel.h">
+      <Filter>ソース ファイル\モデル構造</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelStructs\RenPolygonModel.h">
+      <Filter>ソース ファイル\モデル構造</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderingAction\RenderAction.h">
+      <Filter>ソース ファイル\レンダリングアクション</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadOutput\ThreadOutput.h">
+      <Filter>ソース ファイル\出力スレッド</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadFile\ObjLoad.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadFile\FbxLoad.h">
+      <Filter>ソース ファイル</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="ShaderGraphicPipeline\DrawSharders.hlsl">
+      <Filter>ソース ファイル\グラフィックパイプライン\DrawPipeLineCPP</Filter>
+    </FxCompile>
+    <FxCompile Include="ShaderGraphicPipeline\Cube3DShader.hlsl">
+      <Filter>ソース ファイル\グラフィックパイプライン\Cube3DPipeLineCPP</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

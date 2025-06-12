@@ -1,0 +1,188 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class Judge : MonoBehaviour
+{
+    [SerializeField] private GameObject[] MessageObj;
+    [SerializeField] NotesManager notesManager;
+    public string resultScene;
+
+    int cnt = 0;
+
+    float end_time = 0.0f;
+
+    float timer = 0.0f;
+
+    private void Start()
+    {
+        timer = 0.0f;
+        end_time = notesManager.NotesTime[notesManager.NotesTime.Count - 1];
+    }
+
+    void Update()
+    {
+        if (GManager.instance.Start)
+        {
+            timer += Time.deltaTime;
+            if (Input.GetKey(KeyCode.Space))
+            {
+               
+                if (notesManager.NoteType[0] == 5)
+                {
+                    {
+                        if (Input.GetKeyDown("up"))
+                            Judgement(GetABS(timer - (notesManager.NotesTime[0] + GManager.instance.StartTime)));
+                    }
+                }
+                else if (notesManager.NoteType[0] == 6)
+                {
+                    {
+                        if (Input.GetKeyDown("left"))
+                            Judgement(GetABS(timer - (notesManager.NotesTime[0] + GManager.instance.StartTime)));
+                    }
+                }
+                else if (notesManager.NoteType[0] == 7)
+                {
+                    {
+                        if (Input.GetKeyDown("down"))
+                            Judgement(GetABS(timer - (notesManager.NotesTime[0] + GManager.instance.StartTime)));
+
+                    }
+                }
+                else if (notesManager.NoteType[0] == 8)
+                {
+                    {
+                        if (Input.GetKeyDown("right"))
+                            Judgement(GetABS(timer - (notesManager.NotesTime[0] + GManager.instance.StartTime)));
+
+                    }
+                }
+            }
+            else
+            {
+                if (notesManager.NoteType[0] == 1)
+                {
+                    if (Input.GetKeyDown("up"))
+                    {
+                        Judgement(GetABS(timer - (notesManager.NotesTime[0] + GManager.instance.StartTime)));
+                    }
+                }
+                else if (notesManager.NoteType[0] == 2)
+                {
+                    if (Input.GetKeyDown("left"))
+                    {
+                        Judgement(GetABS(timer - (notesManager.NotesTime[0] + GManager.instance.StartTime)));
+                    }
+                }
+                else if (notesManager.NoteType[0] == 3)
+                {
+                    if (Input.GetKeyDown("down"))
+                    {
+                        Judgement(GetABS(timer - (notesManager.NotesTime[0] + GManager.instance.StartTime)));
+                    }
+                }
+                else if (notesManager.NoteType[0] == 4)
+                {
+                    if (Input.GetKeyDown("right"))
+                    {
+                        Judgement(GetABS(timer - (notesManager.NotesTime[0] + GManager.instance.StartTime)));
+                    }
+                }
+            }
+
+            if (timer > notesManager.NotesTime[0] + 0.15f + GManager.instance.StartTime)//本来ノーツをたたくべき時間から0.2秒たっても入力がなかった場合
+            {
+                message(4);
+                deleteData();
+                Debug.Log("Miss");
+                //ミス
+            }
+
+            if (timer > end_time + GManager.instance.StartTime)
+            {
+                Debug.Log("aiueo");
+                Invoke("Result", 4f);//ノーツの終わり2秒後にリザルト関数へ
+            }
+
+            Debug.Log("エンドタイム" + end_time);
+
+            Debug.Log("現在時間" + Time.deltaTime);
+            Debug.Log(timer);
+        }
+    }
+    void Judgement(float timeLag)
+    {
+        if (timeLag <= 0.06f)//本来ノーツをたたくべき時間と実際にノーツをたたいた時間の誤差が0.05秒以下だったら
+        {
+            Debug.Log("Perfect");
+            GManager.instance.perfect++;
+            GManager.instance.combo++;
+            message(0);
+            deleteData();
+        }
+        //else if (timeLag <= 0.08f)//本来ノーツをたたくべき時間と実際にノーツをたたいた時間の誤差が0.15秒以下だったら
+        //{
+        //    Debug.Log("Great");
+        //    GManager.instance.great++;
+        //    GManager.instance.combo++;
+        //    message(1);
+        //    deleteData();
+        //}
+        else if (timeLag <= 0.10f)//本来ノーツをたたくべき時間と実際にノーツをたたいた時間の誤差が0.3秒以下だったら
+        {
+            Debug.Log("Good");
+            GManager.instance.good++;
+            GManager.instance.combo++;
+            message(2);
+            deleteData();
+        }
+        else if (timeLag <= 0.24f)//本来ノーツをたたくべき時間と実際にノーツをたたいた時間の誤差が0.5秒以下だったら
+        {
+            Debug.Log("Bad");
+            GManager.instance.bad++;
+            GManager.instance.combo++;
+            message(3);
+            deleteData();
+        }
+    }
+    
+    float GetABS(float num)//引数の絶対値を返す関数
+    {
+        if (num >= 0)
+        {
+            return num;
+        }
+        else
+        {
+            return -num;
+        }
+    }
+    void deleteData()//すでにたたいたノーツを削除する関数
+    {
+        if (notesManager.NoteType[0] < 5)
+        {
+            Debug.Log(notesManager.NoteType[0]);
+            Destroy(notesManager.NotesObj[cnt]);
+        }
+        notesManager.NotesTime.RemoveAt(0);
+        notesManager.LaneNum.RemoveAt(0);
+        notesManager.NoteType.RemoveAt(0);
+        cnt++;
+    }
+
+    void message(int judge)//判定を表示する
+    {
+        GameObject Message= Instantiate(MessageObj[judge],
+        new Vector3(0.5f, 1.5f, 1.0f), Quaternion.Euler(0, 0, 0));
+
+        Destroy(Message,0.5f);
+    }
+
+    void Result()
+    {
+        SceneManager.LoadScene(resultScene);//リザルトシーンへ移動
+    }
+}
