@@ -1,0 +1,3 @@
+C:\Users\GA2B\Desktop\GA2_KajimotoYuma\x64\Debug\GA2_KajimotoYuma.exe
+C:\Users\GA2B\Desktop\蚊落ち課題\x64\Debug\GA2_KajimotoYuma.exe
+C:\Users\GA2B\Desktop\ヨーヨー課題\x64\Debug\GA2_KajimotoYuma.exe
