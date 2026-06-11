@@ -1,10 +1,7 @@
 using UnityEngine;
 
-public class GimmickObj : MonoBehaviour
+public class Wall : MonoBehaviour
 {
-
-    float speed = 3f;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -14,11 +11,14 @@ public class GimmickObj : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += transform.right * speed * Time.deltaTime;
+        
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(this.gameObject);
+        if (collision.gameObject.CompareTag("AttackGimmick"))
+        {
+            Destroy(collision.gameObject);
+        }
     }
 }

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,19 +10,22 @@ public class StrokeController : MonoBehaviour
     [SerializeField] float lineWidth;
 
     [SerializeField] PhysicsMaterial2D bounceMaterial;
+    [SerializeField] LayerMask blockLayer;
     [SerializeField] float lifeTime = 3f;
-
-    //[Header("Line Limit")]
-    //[SerializeField] float maxLength = 5f;
-    float currentLength = 0f;
 
     [SerializeField] float maxGauge = 100f;
     [SerializeField] float gaugeCostPerUnit = 10f;
 
+    [SerializeField] Image gauge;
+
     float currentGauge;
 
-    [Header("UI")]
-    [SerializeField] Image gauge;
+    public enum LineType
+    {
+        Normal,
+        Weight,
+        Spring
+    }
 
     [System.Serializable]
     public class TimedPoint
@@ -41,62 +43,90 @@ public class StrokeController : MonoBehaviour
     [System.Serializable]
     public class LineData
     {
+        public LineType type;
+
         public GameObject obj;
         public LineRenderer renderer;
         public EdgeCollider2D collider;
+
         public List<TimedPoint> points = new List<TimedPoint>();
 
-        public float life = 1;
+        public float life = 3f;
 
+        public bool released = false;
+
+        public float recoverLockTime = 3f;
+
+        public float releaseTime;
+
+        public int removedCount = 0;
+        public int initialPointCount;
+
+        public int startIndex = 0;
+        public bool colliderDirty = true;
+
+        public float totalLength = 0;
+
+        public float alpha = 1f;
     }
 
     List<LineData> lines = new List<LineData>();
     LineData currentLine;
 
-    private void Start()
+    public bool now_stroke = false;
+
+    void Start()
     {
         currentGauge = maxGauge;
-        gauge.fillAmount = currentGauge / maxGauge;
+        gauge.fillAmount = 1f;
     }
 
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
+            now_stroke = true;
             _createLine();
-            currentLength = 0f; // ƒŠƒZƒbƒg
         }
 
         if (Input.GetMouseButton(0))
         {
             _addPoint();
-            //_updateGauge();
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            Debug.Log(currentLine.totalLength);
+
+            now_stroke = false;
+
+
+            if (currentLine != null)
+            {
+                currentLine.released = true;
+                currentLine.releaseTime = Time.time + 3f;
+                currentLine.initialPointCount = currentLine.points.Count;
+                currentLine.colliderDirty = true;
+
+            }
         }
 
         if (currentLine != null)
         {
-            if (currentLine.life <= 0)
-            {
-                Destroy(currentLine.obj);
-                lines.Remove(currentLine);
-                currentLine = null;
-            }
+            _updateAllLines();
         }
-
-        _updateAllLines();
-        _recoverGauge();
     }
 
+    // ===================== LINE CREATE =====================
     private void _createLine()
     {
         GameObject obj = new GameObject("Line");
         obj.tag = "Ground";
+        obj.transform.SetParent(transform);
 
         LineRenderer lr = obj.AddComponent<LineRenderer>();
         EdgeCollider2D col = obj.AddComponent<EdgeCollider2D>();
         col.sharedMaterial = bounceMaterial;
-
-        obj.transform.SetParent(transform);
 
         lr.material = lineMaterial;
         lr.material.color = lineColor;
@@ -111,15 +141,16 @@ public class StrokeController : MonoBehaviour
         {
             obj = obj,
             renderer = lr,
-            collider = col
+            collider = col,
+            colliderDirty = true
         };
 
-        LineCollision lc = obj.AddComponent<LineCollision>();
-        lc.line_data = currentLine;
+        obj.AddComponent<LineCollision>().line_data = currentLine;
 
         lines.Add(currentLine);
     }
 
+    // ===================== POINT ADD =====================
     private void _addPoint()
     {
         if (currentLine == null) return;
@@ -134,63 +165,45 @@ public class StrokeController : MonoBehaviour
         Vector3 worldPos =
             Camera.main.ScreenToWorldPoint(mousePos);
 
-        // Å‰‚Ì“_
-        if (currentLine.points.Count == 0)
+        Collider2D hit =
+            Physics2D.OverlapPoint(worldPos, blockLayer);
+
+        if (hit != null) return;
+
+        if (currentLine.points.Count > 0)
         {
-            currentLine.points.Add(
-                new TimedPoint(worldPos, Time.time)
-            );
+            Vector2 lastPos =
+                currentLine.points[currentLine.points.Count - 1].position;
 
-            return;
+            float dist =
+                Vector2.Distance(lastPos, worldPos);
+
+
+            float cost = dist * gaugeCostPerUnit;
+
+            Debug.Log(currentLine.totalLength);
+
+            if (currentGauge < cost)
+            {
+                now_stroke = false;
+                return;
+            }
+
+            currentLine.totalLength += dist;
+
+            currentGauge -= cost;
+            currentGauge = Mathf.Clamp(currentGauge, 0f, maxGauge);
+            gauge.fillAmount = currentGauge / maxGauge;
         }
-
-        Vector2 lastPos =
-            currentLine.points[currentLine.points.Count - 1].position;
-
-        float dist =
-            Vector2.Distance(lastPos, worldPos);
-
-        // ‹——£‚É‰ž‚¶‚½ƒQ[ƒWÁ”ï—Ê
-        float gaugeCost =
-            dist * gaugeCostPerUnit;
-
-        // ƒQ[ƒW•s‘«‚È‚ç•`‚¯‚È‚¢
-        if (currentGauge < gaugeCost)
-        {
-            return;
-        }
-
-        // ƒQ[ƒWÁ”ï
-        currentGauge -= gaugeCost;
-
-        currentGauge = Mathf.Clamp(
-            currentGauge,
-            0f,
-            maxGauge
-        );
-
-        gauge.fillAmount =
-            currentGauge / maxGauge;
-
-        // ü’Ç‰Á
-        currentLength += dist;
 
         currentLine.points.Add(
             new TimedPoint(worldPos, Time.time)
         );
+
+        currentLine.colliderDirty = true;
     }
 
-    //private void _updateGauge()
-    //{
-    //    if (currentGauge <= 0f) return;
-
-    //    currentGauge -= gaugeDecreaseSpeed * Time.deltaTime;
-
-    //    currentGauge = Mathf.Clamp(currentGauge, 0f, maxGauge);
-
-    //    gauge.fillAmount = currentGauge / maxGauge;
-    //}
-
+    // ===================== UPDATE ALL =====================
     private void _updateAllLines()
     {
         float now = Time.time;
@@ -200,43 +213,102 @@ public class StrokeController : MonoBehaviour
         {
             var line = lines[l];
 
-            line.points.RemoveAll(p => now - p.time > lifeTime);
-
-            if (line.points.Count < 2 && !isDrawing)
+            if (line.life <= 0f)
             {
                 Destroy(line.obj);
                 lines.RemoveAt(l);
                 continue;
             }
 
-            line.renderer.positionCount = line.points.Count;
-
-            for (int i = 0; i < line.points.Count; i++)
+            // ===== auto fade =====
+            if (line.released)
             {
-                line.renderer.SetPosition(i, line.points[i].position);
+                float elapsed = now - line.releaseTime;
+
+                float t = elapsed / lifeTime;
+
+                int targetRemove =
+                    Mathf.FloorToInt(t * line.initialPointCount);
+
+                targetRemove = Mathf.Clamp(
+                    targetRemove,
+                    0,
+                    line.initialPointCount
+                );
+
+                int removeNow =
+                    targetRemove - line.removedCount;
+
+                int visible =
+                    line.points.Count - line.startIndex;
+
+                removeNow = Mathf.Clamp(removeNow, 0, visible);
+
+                if (removeNow > 0)
+                {
+                    float recovered = 0f;
+
+                    for (int i = 0; i < removeNow; i++)
+                    {
+                        int idx = line.startIndex + i;
+
+                        if (idx + 1 < line.points.Count)
+                        {
+                            Vector2 a = line.points[idx].position;
+                            Vector2 b = line.points[idx + 1].position;
+
+                            recovered +=
+                                Vector2.Distance(a, b) * gaugeCostPerUnit;
+                        }
+                    }
+
+                    if (Time.time >= line.recoverLockTime)
+                    {
+                        currentGauge += recovered;
+                        currentGauge = Mathf.Clamp(currentGauge, 0f, maxGauge);
+                        gauge.fillAmount = currentGauge / maxGauge;
+                    }
+
+                    line.startIndex += removeNow;
+                    line.removedCount += removeNow;
+
+                    line.colliderDirty = true;
+                }
             }
 
-            if (line.points.Count >= 2)
+            int remain = line.points.Count - line.startIndex;
+
+            if (remain < 2 && !isDrawing)
             {
-                List<Vector2> pts = new List<Vector2>();
-                foreach (var p in line.points)
+                Destroy(line.obj);
+                lines.RemoveAt(l);
+                continue;
+            }
+
+            // ===== LineRenderer =====
+            line.renderer.positionCount = remain;
+
+            for (int i = 0; i < remain; i++)
+            {
+                line.renderer.SetPosition(
+                    i,
+                    line.points[line.startIndex + i].position
+                );
+            }
+
+            // ===== Colliderï¼ˆè»½é‡åŒ–æ¸ˆã¿ï¼‰=====
+            if (line.colliderDirty)
+            {
+                List<Vector2> pts = new List<Vector2>(remain);
+
+                for (int i = line.startIndex; i < line.points.Count; i++)
                 {
-                    pts.Add(p.position);
+                    pts.Add(line.points[i].position);
                 }
 
                 line.collider.SetPoints(pts);
+                line.colliderDirty = false;
             }
         }
-    }
-
-    private void _recoverGauge()
-    {
-        if (currentGauge >= maxGauge) return;
-
-        currentGauge += 2 * Time.deltaTime;
-
-        currentGauge = Mathf.Clamp(currentGauge, 0f, maxGauge);
-
-        gauge.fillAmount = currentGauge / maxGauge;
     }
 }
